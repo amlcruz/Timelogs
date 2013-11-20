@@ -3,9 +3,9 @@ include_once ("include/dbconnect.php");
 
 	$db = new dbcon();
 //Start session
+session_start();
 	
 	if(isset($_POST['username'])){
-		
 		$emp_num = $db->sanitizeString($_POST['username']);
 		$email = $db->sanitizeString($_POST['email']);
 		

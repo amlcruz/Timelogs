@@ -2,7 +2,6 @@
 include_once ("include/dbconnect.php");
 include_once ("include/Employee.php");
 require 'include/PHPMailer/class.phpmailer.php';
-session_start();
 
 	$db = new dbcon();
 	$emplyee = new Employee();
@@ -32,7 +31,7 @@ session_start();
 		$mail->Password = "eggtimelog";           
 		$mail->SetFrom("egg.timelogs@gmail.com", "Timelogs");
 		$mail->Subject = "Timelog Password Reset";
-		$mail->Body = "Go to http://localhost/Timelogs/update_password.php to update your password. Thanks!";
+		$mail->Body = "Go to http://localhost/TimelogsDev/update_password.php to update your password. Thanks!";
 		$mail->AddAddress($_SESSION['email']);
 		$_SESSION['forgot'] = "false";
 		$_SESSION['updated'] = "false";

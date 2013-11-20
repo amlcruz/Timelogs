@@ -1,5 +1,6 @@
 <?php
 include_once ("include/dbconnect.php");
+include_once ("include/Employee.php");
 include_once ("include/Encryption.php");
 
 	
@@ -7,6 +8,7 @@ include_once ("include/Encryption.php");
 	session_start();	
 	$db = new dbcon();
 	$encrypt = new Encryption();
+	$emplyee = new Employee();
 	if($_SESSION['updated'] == "false" && isset($_POST['password1'])){
 		
 		$emp_num = $_SESSION['emp_num'];
@@ -19,7 +21,7 @@ include_once ("include/Encryption.php");
 		else{
 			
 			echo "<script type='text/javascript'>alert('Password Updated!');</script>";
-			$db->updateEmployee($emp_num, $encrypt->encode($pwd1));
+			$emplyee->updateEmployee($emp_num, $encrypt->encode($pwd1));
 			header('Location: http://localhost/Timelogsdev/logform.php');
 			
 		}
