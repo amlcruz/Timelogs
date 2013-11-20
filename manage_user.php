@@ -1,8 +1,12 @@
 <?php
 session_start();
 include_once ("include/dbconnect.php");
+include_once ("include/Encryption.php");
+include_once ("include/Employee.php");
 
 	$db = new dbcon();
+	$emplyee = new Employee();
+	$encrypt = new Encryption();
 	
 	if(!isset($_SESSION['user'])){
 		header('Location: http://localhost/Timelogs/login.php');
@@ -12,7 +16,7 @@ include_once ("include/dbconnect.php");
 		if(($_GET['edit']=="true")){
 			$emp_num = $_GET['emp_num'];
 			$db = new dbcon();
-			$employee = $db->getEmployee($emp_num);
+			$employee = $emplyee->getEmployee($emp_num);
 			$_SESSION['emp_no'] = $employee[1];
 			$_SESSION['fname'] = $employee[2];
 			$_SESSION['mname'] = $employee[3];
@@ -20,12 +24,31 @@ include_once ("include/dbconnect.php");
 			$_SESSION['aname'] = $employee[5];
 			$_SESSION['bday'] = $employee[6];
 			$_SESSION['address'] = $employee[7];
-			$_SESSION['email'] = $employee[8];
-			$_SESSION['password'] = $employee[9];
+			$_SESSION['email'] = $employee[9];
+			$_SESSION['password'] = $employee[8];
 			$_SESSION['user_type'] = $employee[10];
+			$_SESSION['effectivity_date'] = $employee[11];
 			$_SESSION['edit'] = "true";
 		}
 	}
+	
+	if(isset($_POST['view'])){	
+		var_dump($_SESSION);
+		$emp_to_view = $emplyee->getEmployee($_POST['emp_num']);
+		$_SESSION['emp_no'] = $emp_to_view[1];
+		$_SESSION['fname'] = $emp_to_view[2];
+		$_SESSION['mname'] = $emp_to_view[3];
+		$_SESSION['lname'] = $emp_to_view[4];
+		$_SESSION['aname'] = $emp_to_view[5];
+		$_SESSION['bday'] = $emp_to_view[6];
+		$_SESSION['address'] = $emp_to_view[7];
+		$_SESSION['email'] = $emp_to_view[9];
+		$_SESSION['password'] = $emp_to_view[8];
+		$_SESSION['user_type'] = $emp_to_view[10];
+		$_SESSION['effectivity_date'] = $emp_to_view[11];
+		$_SESSION['view'] = "true";
+	}
+	
 	if(isset($_POST['fname'])){	
 		
 		if($_POST['submitted']=="true")
@@ -38,8 +61,10 @@ include_once ("include/dbconnect.php");
 		$bday = $_POST['bday'];
 		$address = $_POST['address'];
 		$email = $_POST['email'];
-		$pwd = md5($_POST['password']);
+		$pwd = $encrypt->encode($_POST['password']);
 		$user_type = $_POST['user_type'];
+		date_default_timezone_get();
+		$effectivity = date('m-d-Y', time());
 		$_POST['submitted'] = "true";
 		$last = $db->getLastEmpNum();
 		$emp_num="00-";
@@ -50,7 +75,7 @@ include_once ("include/dbconnect.php");
 		}
 		$emp_num = $emp_num.$empnum;
 		if($_POST['edit']=="false"){
-			mysql_query("INSERT INTO users (emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type) VALUE ('$emp_num','$fname','$mname','$lname','$aname','$bday','$address','$pwd','$email','$user_type')") or die(mysql_error());
+			mysql_query("INSERT INTO users (emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type,effectivity_date) VALUE ('$emp_num','$fname','$mname','$lname','$aname','$bday','$address','$pwd','$email','$user_type','$effectivity')") or die(mysql_error());
 		}elseif($_SESSION['edit']=="true"){
 			$emp_num = $_SESSION['emp_no'];
 			$fname = $_POST['fname'];
@@ -62,9 +87,10 @@ include_once ("include/dbconnect.php");
 			$email = $_POST['email'];
 			$pwd = $_POST['password'];
 			$user_type = $_POST['user_type'];
+			$effectivity = $_SESSION['effectivity_date'];
 			$_SESSION['edit']="false";
 			
-			mysql_query("UPDATE users SET emp_no='$emp_num',fname='$fname',mname='$mname',lname='$lname',auxname='$aname',birthday='$bday',address='$address',emp_pass='$pwd',email='$email',u_type=$user_type WHERE emp_no='$emp_num'");
+			mysql_query("UPDATE users SET emp_no='$emp_num',fname='$fname',mname='$mname',lname='$lname',auxname='$aname',birthday='$bday',address='$address',emp_pass='$pwd',email='$email',u_type=$user_type, effectivity_date='$effectivity' WHERE emp_no='$emp_num'");
 		}
 		header('Location: http://localhost/Timelogs/manage_user.php');
 	}
@@ -95,6 +121,7 @@ include_once ("include/dbconnect.php");
 			
 			$("#view_emp").click(function(event){
 				$("#content").load("view_employee.php");
+				window.location.reload();
 	        });
 
 			$("#create_emp").click(function(event){
@@ -123,7 +150,7 @@ include_once ("include/dbconnect.php");
 
 		$(document).ready(function(){
 
-			$("input[name='edit']").live('click',function() { // catch the form's submit event
+			$(".edit").live('click',function() { // catch the form's submit event
 				var emp_num = $(this).attr('id');
 			    $.ajax({ // create an AJAX call...
 			    	data: {emp_num: emp_num, edit:"true"}, // get the form data
@@ -140,7 +167,7 @@ include_once ("include/dbconnect.php");
 			    });
 			});
 			
-			$("input[name='delete']").live('click',function() {
+			$(".delete").live('click',function() {
 				var emp_num = $(this).attr('id');
 				$.get('kill.php', function() {
 				});
@@ -171,6 +198,19 @@ include_once ("include/dbconnect.php");
 			      });
 			});
 
+			$("a[name='view']").click(function(event){
+				var emp_num = $(this).attr('id');
+				$.ajax({ // create an AJAX call...
+			        data: {emp_num: emp_num, view:"true"}, // get the form data
+			        type: "POST", 
+			        async: false,
+			        url: "manage_user.php", // the file to call
+			        success: function(response) { // on success..
+			        	$("#content").load("view.php"); // update the DIV
+			        }
+			    });
+	        });
+			
 		}); //end document.ready
 		</script>
 	</head>

@@ -1,9 +1,13 @@
 <?php
 include_once ("include/dbconnect.php");
+include_once ("include/Encryption.php");
+include_once ("include/Employee.php");
+	
 //Start session
 	session_start();	
 	$db = new dbcon();
-	
+	$emplyee = new Employee();
+	$encrypt = new Encryption();
 	if(isset($_SESSION['user'])){
 		session_destroy();
 	}
@@ -24,12 +28,12 @@ include_once ("include/dbconnect.php");
 	
 	if(isset($_POST['username'])){
 		
-		$emp_num = $_POST['username'];
-		$pwd = md5($_POST['password']);
+		$emp_num = $db->sanitizeString($_POST['username']);
+		$pwd = $encrypt->encode($db->sanitizeString($_POST['password']));
 		
 		$emp = $db->getLogin($emp_num, $pwd);
 		if($emp>0){
-			$employee = $db->getEmployee($emp_num);
+			$employee = $emplyee->getEmployee($emp_num);
 			$_SESSION['user'] = $employee[2];
 			$_SESSION['password'] = $pwd;
 			header('Location: http://localhost/Timelogs/manage_user.php');

@@ -1,5 +1,6 @@
 <?php
-class dbcon{
+
+class Employee{
 	
 	function sanitizeString($string){
 			return mysql_real_escape_string(strip_tags(htmlspecialchars($string)));
@@ -11,10 +12,31 @@ class dbcon{
 			mysql_select_db($db_config['db'], $db) or die($this->write_log("Error Connecting to Database: ".mysql_error()));
 		}
 	}
-	
-	function getLastEmpNum(){
+	function getAllEmployees(){
 		
-		$sql = "SELECT emp_no FROM users ORDER BY emp_no DESC LIMIT 1";
+		$sql ="SELECT id,emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type,effectivity_date FROM users ORDER BY emp_no";
+		if(!mysql_query($sql)){
+			$_COOKIE['error'] = mysql_error();
+			header('Location: http://localhost/Timelogs/sqlerrorpage.php');
+		}
+		else{
+			$result = mysql_query($sql);
+		}
+		//$row =fetch_assoc($result);
+		
+		 if ($result){
+	        while($data= mysql_fetch_assoc($result)){
+	            $row[] = $data;
+	        }
+	    }
+	
+		return $row;
+		
+	}
+	
+	function getEmployee($emp_num){
+		
+		$sql = "SELECT id,emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type,effectivity_date FROM users WHERE emp_no='".$emp_num."'";
 		
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
@@ -24,42 +46,35 @@ class dbcon{
 			$result = mysql_query($sql);
 			$row = mysql_fetch_row($result);
 		}
-		
-		return $row[0];
+		return $row;
 		
 	}
 	
-	function getLogin($emp_num,$pwd){
+	function updateEmployee($emp_num,$pwd){
 		
-		$sql = "SELECT id,emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type,effectivity_date FROM users WHERE emp_no='".$emp_num."' AND emp_pass='".$pwd."' AND u_type=5";
-		
+		$sql = "UPDATE users SET emp_pass='".$pwd."' WHERE emp_no='".$emp_num."'";
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
 			header('Location: http://localhost/Timelogs/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
-			$row = mysql_num_rows($result);
 		}
-		return $row;
-		
 	}
 	
-	function retreive($emp_num,$email){
+	function deleteEmployee($emp_num){
 		
-		$sql = "SELECT id,emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type,effectivity_date FROM users WHERE emp_no='".$emp_num."' AND email='".$email."'";
-		
+		$sql = "DELETE FROM users WHERE emp_no='".$emp_num."'";
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
 			header('Location: http://localhost/Timelogs/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
-			$row = mysql_num_rows($result);
 		}
-		return $row;
 		
 	}
+	
 	
 }
 
