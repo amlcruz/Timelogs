@@ -1,0 +1,416 @@
+/**** Stylesheet of texts!! ****/
+
+@font-face{
+  font-family: "myriad_bold_cond";
+  src: url("fontkits/MyriadPro-BoldCond.otf") format("opentype");
+  }
+  
+  @font-face{
+  font-family: "myriad_bold_it";
+  src: url("fontkits/MyriadPro-BoldIt.otf") format("opentype");
+  }
+  
+@font-face{
+  font-family: "myriad_cond";
+  src: url("fontkits/MyriadPro-Cond.otf") format("opentype");
+  }
+  
+@font-face{
+  font-family: "myriad_bold";
+  src: url("fontkits/MyriadPro-Bold.otf") format("opentype");
+  }
+  
+`@font-face{
+  font-family: "myriad_condit";
+  src: url("fontkits/MyriadPro-CondIt.otf") format("opentype");
+  }
+  
+
+  
+  
+.boldcond{
+font-family: "myriad_bold_cond", MyriadPro-BoldCond, sans-serif;
+font-size: 20px;
+}
+
+div#summary_main, #summary_tutorial, #refbox{
+font-family: "myriad_cond", MyriadPro-Cond, sans-serif;
+border-radius: 15px;
+-webkit-border-radius: 15px;
+-moz-border-radius: 15px;
+background-color: #FFFFFF;
+width: 1000px;
+height: auto;
+border: 1px solid #FF3DD2;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 20px;
+margin-top: 4px;
+}
+
+#summary_tutorial p{
+margin: 3px;
+}
+
+#summary_tutorial a{
+text-decoration: underline;
+font-weight: bold;
+color: #314D86;
+}
+
+div#summary_tutorial{
+color: #FF3DAB;
+text-align: center;
+}
+
+div#big_text{
+padding: 10px;
+width: 700px;
+height: auto;
+margin-left: auto;
+margin-right: auto;
+margin-top: -20px;
+text-align: center;
+color: #AB52FF;
+}
+
+
+
+div.line_details, .button_location, .line_summary{
+font-family: "myriad_bold_it", MyriadPro-BoldIt, sans-serif;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 15px;
+width: 870px;
+}
+
+.line_details{
+height: auto;
+}
+p{
+text-align: center;
+}
+.line_details hr{
+/*background-color: #F00;*/
+}
+
+.line_details table{
+width: 724px;
+margin-left:57px;
+}
+
+/** reference **/
+#refbox{
+width: 390px;
+padding-left: 10px;
+padding-right: 10px;
+height: 100px;
+margin-top:0px;
+margin-bottom:15px;
+position: relative;
+border-radius: 15px;
+moz-border-radius: 15px;
+webkit-border-radius: 15px;
+
+}
+
+#refbox p{
+font-family:"myriad_cond", MyriadPro-Cond, sans-serif;
+
+}
+#contact_details{
+/*position: relative;*/
+width: 900px;
+height: auto;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 30px;
+}
+#contact_details p{
+font-family: "myriad", MyriadPro-Regular, sans-serif;
+text-align: justify;
+}
+
+.lefty{
+position: relative;
+float: left;
+}
+
+.righty{
+position: relative;
+float: right;
+}
+
+.leftInfo{
+	font-family: "myriad", MyriadPro-Regular, sans-serif;
+	width:484px;
+	float:left;
+	text-align:left;
+}
+
+.rightInfo{
+	font-family: "myriad", MyriadPro-Regular, sans-serif;
+	width:339px;
+	float:right;
+	text-align:left;
+}
+
+/** reference **/
+
+/** groupPick **/
+#copy, #backer, #create, #group, #send_email, #send_verification, #enter_code, #resend_code{
+background: url('../include/misc/copy.png') no-repeat center center;
+	color: transparent;
+	width: 261px; height: 104px;
+	background-position: top;
+	text-indent: -9999px;
+	-webkit-border-radius: 60px 60px / 60px 10px;
+	-moz-border-radius:10px 10px / 10px 10px;
+	border-radius: 20px 20px / 20px 20px;
+}
+
+#backer{
+background: url('../include/misc/cancel.png') no-repeat center center;
+}
+
+#create{
+background: url('../include/misc/createnew.png') no-repeat center center;
+}
+
+#group{
+background: url('../include/misc/create_group.png') no-repeat center center;
+}
+
+#send_email{
+background: url('../include/misc/send_to_email.png') no-repeat center center;
+}
+
+#send_verification{
+background: url('../include/misc/send_verification.png') no-repeat center center;
+background-size: 261px 104px;
+}
+
+#enter_code{
+background: url('../include/misc/enter.png') no-repeat center center;
+background-size: 261px 104px;
+}
+
+#resend_code{
+background: url('../include/misc/re-send_verification.png') no-repeat center center;
+background-size: 261px 104px;
+}
+/** groupPick **/
+
+
+/**** SCROLLBARS ****/
+
+.scrollgeneric {line-height: 1px;font-size: 1px;position: absolute;top: 0; left: 0;}
+.vscrollerbase {width: 15px;background-color: white;}
+.vscrollerbar {width: 15px;background-color: black;}
+.hscrollerbase {height: 15px;background-color: white;}
+.hscrollerbar {height: 15px;background-color: black;}
+.hscrollerbar {background: #99CBCB url(horizontalbarbody_cornerjog.png) 0px -30px repeat-x;}
+.vscrollerbar {background: #99CBCB url(basebarcaps_verticalbarbody.png) -15px 0px repeat-y;}
+.vscrollerbar, .hscrollerbar {padding: 10px;z-index: 2;}
+.vscrollerbarbeg {background: url(basebarcaps_verticalbarbody.png) -45px -30px no-repeat;width: 15px;height: 15px !important;}
+.vscrollerbarend {background: url(basebarcaps_verticalbarbody.png) -45px 0px no-repeat;width: 15px;height: 15px;}
+.hscrollerbarbeg {background: url(basebarcaps_verticalbarbody.png) -60px -15px no-repeat;height: 15px;width: 15px !important;}
+.hscrollerbarend {background: url(basebarcaps_verticalbarbody.png) -30px -15px no-repeat;height: 15px;width: 15px;}
+.scrollerjogbox {width: 15px;height: 15px;top: auto; left: auto;bottom: 0px; right: 0px;background: #4E727C url(horizontalbarbody_cornerjog.png) 0px 0px;}
+.vscrollerbase {background: #D7EBDF url(basebarcaps_verticalbarbody.png) 0px 0px repeat-y;}
+.vscrollerbasebeg {background: url(basebarcaps_verticalbarbody.png) -30px -30px no-repeat;width: 15px;height: 15px !important;}
+.vscrollerbaseend {background: url(basebarcaps_verticalbarbody.png) -60px -30px no-repeat;height: 15px;width: 15px;}
+.hscrollerbase {background: #D7EBDF url(horizontalbarbody_cornerjog.png) 0px -15px repeat-x;}
+.hscrollerbasebeg {background: url(basebarcaps_verticalbarbody.png) -60px 0px no-repeat;height: 15px;width: 15px !important;}
+.hscrollerbaseend {height: 15px;width: 15px;background: url(basebarcaps_verticalbarbody.png) -30px 0px no-repeat;}
+.scrollerjogbox:hover {background: #5E828C url(basebarcaps_verticalbarbody.png) -45px -15px;}
+
+
+
+.pink{
+color: #FF3DAB;
+}
+
+.purple{
+color: #7D00BB;
+}
+
+.blue{
+color: #618CE0;
+}
+
+.green{
+color: #4FC602;
+}
+
+.button_location{
+border: none;
+text-align:center;
+}
+
+/* ========== plan summary ========== */
+
+#print_summary{
+background: url('../include/misc/print_btn.png') no-repeat center center;
+	color: transparent;
+	width: 100px; height: 35px;
+	background-position: middle;
+	border: 15px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	float:left;
+	cursor:pointer;
+}
+
+#back_to_summary{
+background: url('../include/misc/back_to_summary.png') no-repeat center center;
+	color: transparent;
+	width: 118px; height: 37px;
+	background-position: middle;
+	border: 15px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	vertical-align: middle;
+	margin-right: -600px;
+	cursor:pointer;
+}
+
+#save_pdf{
+	background: url('../include/misc/save_as_btn.png') no-repeat center center;
+	color: transparent;
+	width: 100px; height: 35px;
+	background-position: middle;
+	border: 15px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	float:left;
+	cursor:pointer;
+}
+	
+.subm_plan{
+background: url('../include/misc/submit_ps.png') no-repeat center center;
+	color: transparent;
+	width: 100px; height: 34px;
+	background-position: middle;
+	border: 15px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	cursor:pointer;
+}
+
+.save_plan{
+background: url('../include/misc/save_btn.png') no-repeat center center;
+	color: transparent;
+	width: 100px; height: 34px;
+	background-position: middle;
+	border: 13px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	display:inline;
+	cursor:pointer;
+}
+
+#email_button{
+background: url('../include/misc/email_btn.png') no-repeat center center;
+	color: transparent;
+	width: 100px; height: 34px;
+	background-position: middle;
+	border: 15px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	cursor:pointer;
+}
+
+.okay_button, #submit_all{
+background: url('../include/misc/ok_btn.png') no-repeat center center;
+	color: transparent;
+	width: 100px; height: 34px;
+	background-position: middle;
+	border: 15px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	cursor:pointer;
+}
+
+/* ========== plan summary ========== */
+
+/*=========== Caveats =============*/
+
+div.smalltext p{
+font-family: "myriad_cond", MyriadPro-Cond, sans-serif;
+font-size: 15px;
+}
+
+div.smalltext2 {
+width: 500px;
+margin-left:auto;
+margin-right: auto;
+padding-bottom: 0px;
+}
+.caveat{
+font-family: "myriad_condit", MyriadPro-CondIt, sans-serif;
+font-size: 16px;
+opcaity: 0.8;
+color: #555555;
+letter-spacing: 1px;
+}
+
+#total_count{
+height: inherit;
+position: relative;
+
+}
+
+.caveat_2, .caveat_2_left{
+position: absolute;
+bottom: 10px;
+right: 0px;
+font-family: "myriad", MyriadPro, sans-serif;
+font-size: 12px;
+color: #555555;
+opacity: 0.8;
+margin-right: 20px;
+/*margin-top: 100px;*/
+text-align: right;
+}
+
+.caveat_2_left{
+left: 0px;
+margin-left: 20px;
+text-align: left;
+}
+
+.caveat_gadget_right{
+font-family: "myriad", MyriadPro, sans-serif;
+font-size: 12px;
+color: #555555;
+opacity: 0.8;
+float:left;
+margin-left: 20px;
+margin-top: 0px;
+text-align: right;
+color: #555555;
+	
+}
+
+.caveat_gadget_left{
+font-family: "myriad", MyriadPro, sans-serif;
+font-size: 12px;
+color: #555555;
+opacity: 0.8;
+float:right;
+margin-right: 20px;
+margin-top: 0px;
+text-align: right;
+color: #555555;
+	
+}
+
+/*=========== Caveats =============*/
