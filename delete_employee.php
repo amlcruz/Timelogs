@@ -1,6 +1,6 @@
 <?php
-include_once ("include/dbconnect.php");
+include_once ("include/Employee.php");
 	$emp_num = $_POST['emp_num'];
-	$db = new dbcon();
-	$db->deleteEmployee($emp_num);
+	$emplyee = new Employee();
+	$emplyee->deleteEmployee($emp_num);
 ?>
