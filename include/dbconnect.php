@@ -95,6 +95,13 @@ class dbcon{
 		return $result;
 	}
 	
+	function getLogData($empno, $from, $to){
+		$sql = "SELECT * FROM logs WHERE emp_no = '".$empno."' AND date >= '".$from."' AND date <= '".$to."' " ;
+
+		$result = mysql_query($sql) or die("Cannot get Logged Data");
+		
+		return $result;
+	}
 }
 
 ?>
