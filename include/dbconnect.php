@@ -18,7 +18,7 @@ class dbcon{
 		
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelogs/sqlerrorpage.php');
+			header('Location: http://localhost/Timelog/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
@@ -35,7 +35,7 @@ class dbcon{
 		
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelogs/sqlerrorpage.php');
+			header('Location: http://localhost/Timelogsdev/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
@@ -51,7 +51,7 @@ class dbcon{
 		
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelogs/sqlerrorpage.php');
+			header('Location: http://localhost/Timelogsdev/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);

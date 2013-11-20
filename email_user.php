@@ -19,7 +19,7 @@ session_start();
 		$password = $and;
 		
 		if($_SESSION['forgot']=="false")
-			header('Location: http://localhost/Timelogs/forgotpw.php');
+			header('Location: http://localhost/Timelogsdev/forgotpw.php');
 		
 		$mail = new PHPMailer();  // create a new object
 		$mail->IsSMTP(); // enable SMTP
