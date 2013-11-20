@@ -36,7 +36,7 @@ include_once ("include/Employee.php");
 			$employee = $emplyee->getEmployee($emp_num);
 			$_SESSION['user'] = $employee[2];
 			$_SESSION['password'] = $pwd;
-			header('Location: http://localhost/Timelog/manage_user.php');
+			header('Location: http://localhost/Timelogsdev/manage_user.php');
 		}
 		else 
 			echo "<script type='text/javascript'>alert('Username and password did not match.');</script>";

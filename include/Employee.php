@@ -17,7 +17,7 @@ class Employee{
 		$sql ="SELECT id,emp_no,fname,mname,lname,auxname,birthday,address,emp_pass,email,u_type,effectivity_date FROM users ORDER BY emp_no";
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelog/sqlerrorpage.php');
+			header('Location: http://localhost/Timelogsdev/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
@@ -40,7 +40,7 @@ class Employee{
 		
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelog/sqlerrorpage.php');
+			header('Location: http://localhost/Timelogsdev/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
@@ -55,7 +55,7 @@ class Employee{
 		$sql = "UPDATE users SET emp_pass='".$pwd."' WHERE emp_no='".$emp_num."'";
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelog/sqlerrorpage.php');
+			header('Location: http://localhost/Timelogsdev/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);
@@ -67,7 +67,7 @@ class Employee{
 		$sql = "DELETE FROM users WHERE emp_no='".$emp_num."'";
 		if(!mysql_query($sql)){
 			$_COOKIE['error'] = mysql_error();
-			header('Location: http://localhost/Timelog/sqlerrorpage.php');
+			header('Location: http://localhost/Timelogsdev/sqlerrorpage.php');
 		}
 		else{
 			$result = mysql_query($sql);

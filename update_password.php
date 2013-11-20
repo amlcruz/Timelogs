@@ -20,7 +20,7 @@ include_once ("include/Encryption.php");
 			
 			echo "<script type='text/javascript'>alert('Password Updated!');</script>";
 			$db->updateEmployee($emp_num, $encrypt->encode($pwd1));
-			header('Location: http://localhost/Timelog/logform.php');
+			header('Location: http://localhost/Timelogsdev/logform.php');
 			
 		}
 	} //else header('Location: http://localhost/Timelogs/login.php'); //or employee login page
