@@ -9,7 +9,7 @@ include_once ("include/Employee.php");
 	$encrypt = new Encryption();
 	
 	if(!isset($_SESSION['user'])){
-		header('Location: http://localhost/Timelogs/login.php');
+		header('Location: http://localhost/Timelog/login.php');
 	}
 
 	if(isset($_GET['edit'])){	
@@ -52,7 +52,7 @@ include_once ("include/Employee.php");
 	if(isset($_POST['fname'])){	
 		
 		if($_POST['submitted']=="true")
-			header('Location: http://localhost/Timelogs/manage_user.php');
+			header('Location: http://localhost/Timelog/manage_user.php');
 			
 		$fname = $_POST['fname'];
 		$mname = $_POST['mname'];
@@ -92,7 +92,7 @@ include_once ("include/Employee.php");
 			
 			mysql_query("UPDATE users SET emp_no='$emp_num',fname='$fname',mname='$mname',lname='$lname',auxname='$aname',birthday='$bday',address='$address',emp_pass='$pwd',email='$email',u_type=$user_type, effectivity_date='$effectivity' WHERE emp_no='$emp_num'");
 		}
-		header('Location: http://localhost/Timelogs/manage_user.php');
+		header('Location: http://localhost/Timelog/manage_user.php');
 	}
 ?>
 <html>
