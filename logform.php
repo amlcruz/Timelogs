@@ -42,8 +42,9 @@ if(isset($_POST["login"])) {
 	        <input type="text" placeholder="Employee-ID" name="empid">
 	        <label>Password</label>
 	        <input type="password" placeholder="Password" name="pword">
-	        <button type="submit" name="login" class="small button radius">Log-in</button>
-	        <button type="reset" name="reset" class="small button radius">Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        <button type="submit" name="login" class="small button radius">Log-in</button> 
+	        <button type="reset" name="reset" class="small button radius">Reset</button>
+	        <a href="forgotpw.php" name="forgotpw" class="small button radius secondary">FORGOT PW</a>
 	        <a href="login.php" name="admin" class="small button radius secondary">ADMIN</a>
 	      </div>
 	    </div>
