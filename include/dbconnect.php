@@ -61,6 +61,40 @@ class dbcon{
 		
 	}
 	
+	function logEmployee($emp_num){
+		$sql = "SELECT * FROM users WHERE emp_no LIKE '".$emp_num."'";
+		
+		$result = mysql_query($sql) or die();
+			
+		return $result;
+	}
+	
+	function insertPunch ($empno, $date, $time, $inoutlog) {
+		$sql = "INSERT INTO logs (emp_no, date, time, status) VALUES ('".$empno."','".$date."','".$time."','".$inoutlog."')";
+		
+		$result = mysql_query($sql) or die ("Cannot insert data in logs");
+			
+		return $result;
+	}
+	
+	function getPeriodCount($empno){
+		$sql = "SELECT COUNT(*) as num FROM period WHERE period_from >= (SELECT effectivity_date FROM users WHERE emp_no = '".$empno."')";
+
+		$result = mysql_query($sql) or die("Cannot get Period Data");
+		
+		$row = mysql_fetch_array($result);
+		
+		return $row["num"];
+	}
+	
+	function getPeriod($empno, $start, $limit){
+		$sql = "SELECT * FROM period WHERE period_from >= (SELECT effectivity_date FROM users WHERE emp_no = '".$empno."') LIMIT ".$start.", ".$limit."";
+
+		$result = mysql_query($sql) or die("Cannot get Period Data");
+				
+		return $result;
+	}
+	
 }
 
 ?>
