@@ -113,6 +113,16 @@
 <html>
 <head>
 <?php echo $pagination;?>
+
+<script type="text/javascript">
+
+//url with extra parameters
+$('#myModal').foundation('reveal', 'open', {
+    url: 'http://some-url',
+    data: {param1: 'value1', param2: 'value2'}
+});
+</script>
+
 </head>
 <div id="myModal" class="reveal-modal">
   <?php include_once ("timedata.php"); ?>
@@ -126,7 +136,10 @@
 <table align="center">
   <thead>
     <tr>
-      <th width="200" class="center">PERIOD</th>
+      <th width="200" class="center">PERIOD
+      <a href="http://some-url" data-reveal-id="myModal" data-reveal-ajax="true">
+    Click Me For A Modal
+</a></th>
       <th width="50" class="center">YEAR</th>
     </tr>
     

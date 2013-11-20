@@ -3,11 +3,14 @@ session_start();
 error_reporting(0);
 
 include_once "include/dbconnect.php";
+include_once "include/Encryption.php";
+
 $db =  new dbcon();
+$encrypt = new Encryption();
 
 if(isset($_POST["login"])) {
-	$emp = $_POST["empid"];
-	$pwd = md5($_POST["pword"]);
+	$emp = $db->sanitizeString($_POST["empid"]);
+	$pwd = $encrypt->encode($db->sanitizeString($_POST["pword"]));
 	
 	$sql = $db->logEmployee($emp);
 	
