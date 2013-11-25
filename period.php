@@ -118,7 +118,7 @@
 
 //url with extra parameters
 $('#myModal').foundation('reveal', 'open', {
-    url: 'timedata.php?from=00-00001',
+    url: 'timeSummary.php?from=00-00001',
     data: {param1: 'value1', param2: 'value2'},
     success: function(data) {
         alert('modal data loaded');
@@ -131,7 +131,7 @@ $('#myModal').foundation('reveal', 'open', {
 
 </head>
 <div id="myModal" class="reveal-modal">
-  <?php include_once ("timedata.php"); ?>
+  <?php include_once ("timeSummary.php"); ?>
   <h2>Awesome. I have it.</h2>
   <p class="lead">Your couch.  It is mine.?></p>
   <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
@@ -157,7 +157,7 @@ $('#myModal').foundation('reveal', 'open', {
 			$period_from = $row["period_from"];
 			$period_to = $row["period_to"];
 			$period_year = $row["period_year"];
-			echo "<tr><td class=\"center\"><a href=\"timedata.php?from=".$period_from ."&to=".$period_to."\" data-reveal-id=\"myModal\" data-reveal-ajax=\"true\">".$period_from ." - ". $period_to."</a></td><td class=\"center\">".$period_year."</td></tr>";
+			echo "<tr><td class=\"center\"><a href=\"timeSummary.php?from=".$period_from ."&to=".$period_to."\" data-reveal-id=\"myModal\" data-reveal-ajax=\"true\">".$period_from ." - ". $period_to."</a></td><td class=\"center\">".$period_year."</td></tr>";
     	}
 	?>
   </tbody>
