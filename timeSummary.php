@@ -11,17 +11,17 @@ $period_to = $_GET["to"];
 
 $logs = $db->getLogData($empno, $period_fr, $period_to);
 
-$timeCheck = strtotime("08:00");				// 8 AM
-$timeCheck = date('H:i', $timeCheck);
+$inCheck1 = strtotime("08:00");				// 8 AM
+$inCheck1 = date('H:i', $inCheck1);
 
-$lateCheck = strtotime("10:00");				// 10 AM
-$lateCheck = date('H:i', $lateCheck);
+$inCheck2 = strtotime("10:00");				// 10 AM
+$inCheck2 = date('H:i', $inCheck2);
 
-$utimeCheck1 = strtotime("17:00");				// 5 PM
-$utimeCheck1 = date('H:i', $utimeCheck1);
+$outCheck1 = strtotime("17:00");				// 5 PM
+$outCheck1 = date('H:i', $outCheck1);
 
-$utimeCheck2 = strtotime("19:00");				// 7 PM
-$utimeCheck2 = date('H:i', $utimeCheck2);
+$outCheck2 = strtotime("19:00");				// 7 PM
+$outCheck2 = date('H:i', $outCheck2);
 ?>
 
 
@@ -29,9 +29,13 @@ $utimeCheck2 = date('H:i', $utimeCheck2);
 <html>
 <head>
 
+
+
 </head>
 <body>
+
 <p align="center">RAW DATA<br/>FROM <?php echo $period_fr;?> TO <?php echo $period_to;?></p>
+<a class="close-reveal-modal">&#215;</a>
 <table align="center">
   <thead>
     <tr>
@@ -39,7 +43,9 @@ $utimeCheck2 = date('H:i', $utimeCheck2);
       <th width="50" class="center">DAY</th>
       <th width="100" class="center">TIME IN</th>
       <th width="100" class="center">TIME OUT</th>
+      <th width="50" class="center">EXCESS</th>
       <th width="50" class="center">LATE</th>
+      <th width="50" class="center">UNDERTIME</th>
     </tr>
     
   </thead>
@@ -83,68 +89,73 @@ $utimeCheck2 = date('H:i', $utimeCheck2);
 			$timeInDisplay = $value['timeIn'];
 			$timeOutDisplay = $value['timeOut'];
 			
+			// COMPUTE EXCESS
+  	  		$excessDisplay = "";
+			$excessHour = "";
+			$exceessMin = "";
+			$excessTime = 0.00;
+			
+			$first  = new DateTime( $timeInDisplay );
+			$second = new DateTime( $timeOutDisplay );
+			
+			$diff = $first->diff( $second );
+			
+			if($diff->format( '%H' ) > 8) {
+				$excessHour = $diff->format( '%H' ); // -> 25:00:00
+				$exceessMin = $diff->format( '%I' ); // -> 00:25:00
+				$excessTime = ( ($excessHour) - 8 )+ ($exceessMin/60);
+			}
+			
+			
+			
 			// COMPUTE LATE
 			$lateDisplay = "";
 			$lateHour = "";
 			$lateMin = "";
 			
-			if ($timeInDisplay > $lateCheck) {
-				$lateDisplay = $lateCheck;
+			if ($timeInDisplay > $inCheck2) {
+				$lateDisplay = $inCheck2;
 				
 				$first  = new DateTime($timeInDisplay);
-				$second = new DateTime($lateCheck);
+				$second = new DateTime($inCheck2);
 				
 				$diff = $first->diff( $second );
 				
-				$lateHour = $diff->format( '%H' ); // -> 00:25:25
-				$lateMin = $diff->format( '%I' ); // -> 00:25:25
+				$lateHour = $diff->format( '%H' ); // -> 25:00:00
+				$lateMin = $diff->format( '%I' ); // -> 00:25:00
 			}
 			
 			
 			$lateTime = $lateHour + ($lateMin/60);
 			
-			
-			// COMPUTE OVERTIME
-  	  		$overDisplay = "";
-			$overHour = "";
-			$overMin = "";
-			
-			$first  = new DateTime( $timeInDisplay );
-			$second = new DateTime( $timeOutDisplay );
-
-			$diff = $first->diff( $second );
-			
-			if($diff>8) {
-				$overHour = $diff->format( '%H' ); // -> 00:25:25
-				$overMin = $diff->format( '%I' ); // -> 00:25:25
-			}
-				
-			$overTime = $overHour + ($overMin/60);
-			
-			
-			/*
 			// COMPUTE UNDERTIME
   	  		$underDisplay = "";
 			$underHour = "";
 			$underMin = "";
 			
-			if ($timeInDisplay > $late) {
-				$lateDisplay = $late;
-				
+			if ($timeInDisplay < $inCheck2) {
 				$first  = new DateTime( $timeInDisplay );
-				$second = new DateTime($late);
+				$second = new DateTime( $timeOutDisplay );
+				
+				
 				
 				$diff = $first->diff( $second );
-				
-				$lateHour = $diff->format( '%H' ); // -> 00:25:25
-				$lateMin = $diff->format( '%I' ); // -> 00:25:25
+				if($diff->format( '%H' ) > 8) {
+					$eightHour = $first->format('%H') + 8;
+					
+					$underHour = $diff->format( '%H' ); // -> 25:00:00
+					$exceessMin = $diff->format( '%I' ); // -> 00:25:00
+					$excessTime = ( ($excessHour) - 8 )+ ($exceessMin/60);
+				}
 			}
-			*/
+			
 			
   	  		echo "<tr><td class=\"center\">".$dateDisplay."</td><td class=\"center\">
   	  			".$dayDisplay."</td><td class=\"center\">".$timeInDisplay."</td>
   	  			<td class=\"center\">".$timeOutDisplay."</td>
-  	  			<td class=\"center\">".number_format($lateTime,2)."</td></tr>";
+  	  			<td class=\"center\">".number_format($excessTime,2)."</td>
+  	  			<td class=\"center\">".number_format($lateTime,2)."</td>
+  	  			<td class=\"center\">".number_format($excessTime,2)."</td></tr>";
   	  	}
   	  	/*
   	  	$date_in = "";
@@ -169,8 +180,6 @@ $utimeCheck2 = date('H:i', $utimeCheck2);
   		?>
   </tbody>
 </table>
-<?php 
-include_once ("include/scripts.php");
-?>
+
 </body>
 </html>

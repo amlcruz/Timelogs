@@ -3,6 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	
 	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/foundation.min.js"></script>
 	<script type="text/javascript" src="js/vendor/custom.modernizr.js"></script>
 	

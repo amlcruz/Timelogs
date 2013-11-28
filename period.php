@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 	error_reporting(0);
-	include_once ("include/scripts.php");
+	
 	include_once ("include/dbconnect.php");
 	$db =  new dbcon();
 	
@@ -10,7 +10,7 @@
 	echo $sql;
 	$adjacents = 3;
 	
-	$targetpage = "period.php";
+	$targetpage = "main.php?linkPass=1";
 	$limit = 2; 								
 	$page = $_GET['page'];
 	if($page) 
@@ -35,7 +35,7 @@
 		$pagination .= "<div class=\"pagination-centered\"> <ul class=\"pagination\">";
 		//previous button
 		if ($page > 1) 
-			$pagination.= "<li class=\"current\"><li class=\"arrow\"><a href=\"$targetpage?page=$prev\">&laquo;</a></li>";
+			$pagination.= "<li class=\"current\"><li class=\"arrow\"><a href=\"$targetpage&page=$prev\">&laquo;</a></li>";
 		else
 			$pagination.= "<li class=\"current\"><li class=\"arrow unavailable\"><span class=\"disabled\">&laquo;</span></li>";	
 		//pages	
@@ -46,7 +46,7 @@
 				if ($counter == $page)
 					$pagination.= "<li class=\"current\"><a href=\"\">$counter</a></li>";
 				else
-					$pagination.= "<li><a href=\"$targetpage?page=$counter\">$counter</a></li>";					
+					$pagination.= "<li><a href=\"$targetpage&page=$counter\">$counter</a></li>";					
 			}
 		}
 		elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
@@ -59,48 +59,48 @@
 					if ($counter == $page)
 						$pagination.= "<li class=\"unavailable\"><span class=\"current\">$counter</span><li>";
 					else
-						$pagination.= "<li><a href=\"$targetpage?page=$counter\">$counter</a></li>";					
+						$pagination.= "<li><a href=\"$targetpage&page=$counter\">$counter</a></li>";					
 				}
 				
 				$pagination.= "<li class=\"unavailable\"><a href=\"\">&hellip;</a></li>";
-				$pagination.= "<li><a href=\"$targetpage?page=$lpm1\">$lpm1d</a></li>";
-				$pagination.= "<li><a href=\"$targetpage?page=$lastpage\">$lastpage</a></li>";		
+				$pagination.= "<li><a href=\"$targetpage&page=$lpm1\">$lpm1d</a></li>";
+				$pagination.= "<li><a href=\"$targetpage&page=$lastpage\">$lastpage</a></li>";		
 			}
 			//in middle; hide some front and some back
 			elseif($lastpage - ($adjacents * 2) > $page && $page > ($adjacents * 2))
 			{
-				$pagination.= "<li><a href=\"$targetpage?page=1\">1</a></li>";
-				$pagination.= "<li><a href=\"$targetpage?page=2\">2</a></li>";
+				$pagination.= "<li><a href=\"$targetpage&page=1\">1</a></li>";
+				$pagination.= "<li><a href=\"$targetpage&page=2\">2</a></li>";
 				$pagination.= "<li class=\"unavailable\"><a href=\"\">&hellip;</a></li>";
 				for ($counter = $page - $adjacents; $counter <= $page + $adjacents; $counter++)
 				{
 					if ($counter == $page)
 						$pagination.= "<li class=\"unavailable\"><span class=\"current\">$counter</span></li>";
 					else
-						$pagination.= "<li><a href=\"$targetpage?page=$counter\">$counter</a></li>";					
+						$pagination.= "<li><a href=\"$targetpage&page=$counter\">$counter</a></li>";					
 				}
 				$pagination.= "<li class=\"unavailable\"><a href=\"\">&hellip;</a></li>";
-				$pagination.= "<li><a href=\"$targetpage?page=$lpm1\">$lpm1</a></li>";
-				$pagination.= "<li><a href=\"$targetpage?page=$lastpage\">$lastpage</a></li>";		
+				$pagination.= "<li><a href=\"$targetpage&page=$lpm1\">$lpm1</a></li>";
+				$pagination.= "<li><a href=\"$targetpage&page=$lastpage\">$lastpage</a></li>";		
 			}
 			//close to end; only hide early pages
 			else
 			{
-				$pagination.= "<li><a href=\"$targetpage?page=1\">1</a></li>";
-				$pagination.= "<li><a href=\"$targetpage?page=2\">2</a></li>";
+				$pagination.= "<li><a href=\"$targetpage&page=1\">1</a></li>";
+				$pagination.= "<li><a href=\"$targetpage&page=2\">2</a></li>";
 				$pagination.= "<li class=\"unavailable\"><a href=\"\">&hellip;</a></li>";
 				for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
 				{
 					if ($counter == $page)
 						$pagination.= "<li class=\"unavailable\"><span class=\"current\">$counter</span></li>";
 					else
-						$pagination.= "<li><a href=\"$targetpage?page=$counter\">$counter</a></li>";					
+						$pagination.= "<li><a href=\"$targetpage&page=$counter\">$counter</a></li>";					
 				}
 			}
 		}
 		//next button
 		if ($page < $counter - 1) 
-			$pagination.= "<li class=\"arrow\"><a href=\"$targetpage?page=$next\">&raquo;</a></li>";
+			$pagination.= "<li class=\"arrow\"><a href=\"$targetpage&page=$next\">&raquo;</a></li>";
 		else
 			$pagination.= "<li class=\"arrow\"><span class=\"disabled\">&raquo;</span></li>";
 		$pagination.= "</ul></div>\n";		
@@ -113,29 +113,33 @@
 <html>
 <head>
 <?php echo $pagination;?>
-
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/foundation.min.js"></script>
+	
 <script type="text/javascript">
 
-//url with extra parameters
+var from_data = "<?php echo $_GET["from"]; ?>"
+var to_data = "<?php echo $_GET["to"]; ?>"
+
 $('#myModal').foundation('reveal', 'open', {
-    url: 'timeSummary.php?from=00-00001',
-    data: {param1: 'value1', param2: 'value2'},
+	url: 'timeSummary.php',
+    data: {'from': from_data, 'to': to_data},
+    async: false,
     success: function(data) {
-        alert('modal data loaded');
+		window.location.href='main.php?linkPass=1';
     },
     error: function() {
         alert('failed loading modal');
     }
 });
-</script>
 
+</script>
 </head>
+
 <div id="myModal" class="reveal-modal">
-  <?php include_once ("timeSummary.php"); ?>
-  <h2>Awesome. I have it.</h2>
-  <p class="lead">Your couch.  It is mine.?></p>
-  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-  <a class="close-reveal-modal">&#215;</a>
+ 
+  
 </div>
 <body>
 
@@ -144,8 +148,9 @@ $('#myModal').foundation('reveal', 'open', {
     <tr>
       <th width="200" class="center">PERIOD
       
-    Click Me For A Modal
-</a></th>
+    
+
+	</th>
       <th width="50" class="center">YEAR</th>
     </tr>
     
@@ -162,5 +167,8 @@ $('#myModal').foundation('reveal', 'open', {
 	?>
   </tbody>
 </table>
+<?php 
+include_once ("include/scripts.php");
+?>
 </body>
 </html>
