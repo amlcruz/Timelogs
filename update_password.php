@@ -9,7 +9,7 @@ include_once ("include/Encryption.php");
 	$db = new dbcon();
 	$encrypt = new Encryption();
 	$emplyee = new Employee();
-	if($_SESSION['updated'] == "false" && isset($_POST['password1'])){
+	if(isset($_SESSION['updated']) && $_SESSION['updated'] == "false" && isset($_POST['password1'])){
 		
 		$emp_num = $_SESSION['emp_num'];
 		$pwd1 = $db->sanitizeString($_POST['password1']);

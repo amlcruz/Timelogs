@@ -78,7 +78,7 @@ class dbcon{
 	}
 	
 	function getPeriodCount($empno){
-		$sql = "SELECT COUNT(*) as num FROM period WHERE period_from >= (SELECT effectivity_date FROM users WHERE emp_no = '".$empno."')";
+		$sql = "SELECT COUNT(*) as num FROM period WHERE period_to >= (SELECT effectivity_date FROM users WHERE emp_no = '".$empno."')";
 
 		$result = mysql_query($sql) or die("Cannot get Period Data");
 		
@@ -88,7 +88,7 @@ class dbcon{
 	}
 	
 	function getPeriod($empno, $start, $limit){
-		$sql = "SELECT * FROM period WHERE period_from >= (SELECT effectivity_date FROM users WHERE emp_no = '".$empno."') LIMIT ".$start.", ".$limit."";
+		$sql = "SELECT * FROM period WHERE period_to >= (SELECT effectivity_date FROM users WHERE emp_no = '".$empno."') LIMIT ".$start.", ".$limit."";
 
 		$result = mysql_query($sql) or die("Cannot get Period Data");
 				

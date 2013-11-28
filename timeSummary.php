@@ -22,6 +22,9 @@ $outCheck1 = date('H:i', $outCheck1);
 
 $outCheck2 = strtotime("19:00");				// 7 PM
 $outCheck2 = date('H:i', $outCheck2);
+
+$timeInDisplay = "";
+$timeOutDisplay = "";
 ?>
 
 
@@ -51,6 +54,11 @@ $outCheck2 = date('H:i', $outCheck2);
   </thead>
   <tbody>
   	  	<?php
+  	  	
+  	  	$totalExcess = 0;
+  	  	$totalLate = 0;
+  	  	$totalUndertime = 0;
+  	  	
   	  	for ($x = $period_fr, $id = 0; $x <= $period_to; $x++, $num++) {
   	  		$timeSummary[] = array(
   	  			'id' => $num,
@@ -93,69 +101,101 @@ $outCheck2 = date('H:i', $outCheck2);
   	  		$excessDisplay = "";
 			$excessHour = "";
 			$exceessMin = "";
-			$excessTime = 0.00;
+			$excessTime = "";
 			
-			$first  = new DateTime( $timeInDisplay );
-			$second = new DateTime( $timeOutDisplay );
-			
-			$diff = $first->diff( $second );
-			
-			if($diff->format( '%H' ) > 8) {
-				$excessHour = $diff->format( '%H' ); // -> 25:00:00
-				$exceessMin = $diff->format( '%I' ); // -> 00:25:00
-				$excessTime = ( ($excessHour) - 8 )+ ($exceessMin/60);
+			if($timeInDisplay && $timeOutDisplay) {
+				$first  = new DateTime( $timeInDisplay );
+				$second = new DateTime( $timeOutDisplay );
+				
+				$diff = $first->diff( $second );
+				
+				if($diff->format( '%H' ) > 8) {
+					$excessHour = $diff->format( '%H' ); // -> 25:00:00
+					$exceessMin = $diff->format( '%I' ); // -> 00:25:00
+					$excessTime = ( ($excessHour) - 9 )+ ($exceessMin/60);
+				}
+				else
+					$excessTime = 0;
 			}
 			
-			
+			$totalExcess += $excessTime;
 			
 			// COMPUTE LATE
 			$lateDisplay = "";
 			$lateHour = "";
 			$lateMin = "";
+			$lateTime = "";
 			
-			if ($timeInDisplay > $inCheck2) {
-				$lateDisplay = $inCheck2;
-				
-				$first  = new DateTime($timeInDisplay);
-				$second = new DateTime($inCheck2);
-				
-				$diff = $first->diff( $second );
-				
-				$lateHour = $diff->format( '%H' ); // -> 25:00:00
-				$lateMin = $diff->format( '%I' ); // -> 00:25:00
+			if($timeInDisplay && $timeOutDisplay) {
+				if ($timeInDisplay > $inCheck2) {
+					$lateDisplay = $inCheck2;
+					
+					$first  = new DateTime($timeInDisplay);
+					$second = new DateTime($inCheck2);
+					
+					$diff = $first->diff( $second );
+					
+					$lateHour = $diff->format( '%H' ); // -> 25:00:00
+					$lateMin = $diff->format( '%I' ); // -> 00:25:00
+					
+					$lateTime = $lateHour + ($lateMin/60);
+				}
+				else
+					$lateTime = 0;
 			}
 			
 			
-			$lateTime = $lateHour + ($lateMin/60);
+			$totalLate += $lateTime;
 			
 			// COMPUTE UNDERTIME
-  	  		$underDisplay = "";
+  	  		$underTime = "";
 			$underHour = "";
 			$underMin = "";
-			
-			if ($timeInDisplay < $inCheck2) {
-				$first  = new DateTime( $timeInDisplay );
-				$second = new DateTime( $timeOutDisplay );
-				
-				
-				
-				$diff = $first->diff( $second );
-				if($diff->format( '%H' ) > 8) {
-					$eightHour = $first->format('%H') + 8;
+			if($timeInDisplay && $timeOutDisplay) {
+				if ($timeInDisplay < $inCheck2) {					//ex. if (8:30 < 10:00)
 					
-					$underHour = $diff->format( '%H' ); // -> 25:00:00
-					$exceessMin = $diff->format( '%I' ); // -> 00:25:00
-					$excessTime = ( ($excessHour) - 8 )+ ($exceessMin/60);
+					$third = date('H:i', strtotime($timeOutDisplay));				//ex. 15:30  		
+					$fourth = date('H:i', strtotime($timeInDisplay) + (3600*9));	//ex. 17:30
+					
+					if($fourth < $third)											//ex. if(17:30 < 15:30)
+						$underTime = 0;
+					else {		
+						$first  = new DateTime( $third );							//ex. 08:30
+						$second = new DateTime( $fourth );							//ex. 15:30 
+						
+						$diff = $second->diff( $first );
+					
+						$underHour = $diff->format( '%H' ); // -> 25:00:00
+						$underMin = $diff->format( '%I' ); // -> 00:25:00
+						
+						$underTime = (($underHour))+ ($underMin/60);
+					}
+				}
+				else {												//ex. if (LATE)
+					$first  = new DateTime( $timeOutDisplay );						//ex. 19:00
+					$second = new DateTime( $outCheck2 );							//ex. 17:30
+
+					if($first < $second) {
+						$diff = $first->diff( $second );
+						
+						$underHour = $diff->format( '%H' ); // -> 25:00:00
+						$underMin = $diff->format( '%I' ); // -> 00:25:00
+						
+						$underTime = (($underHour))+ ($underMin/60);
+					}
+					else
+						$underTime = 0;
 				}
 			}
 			
+			$totalUndertime += $underTime; 
 			
   	  		echo "<tr><td class=\"center\">".$dateDisplay."</td><td class=\"center\">
   	  			".$dayDisplay."</td><td class=\"center\">".$timeInDisplay."</td>
   	  			<td class=\"center\">".$timeOutDisplay."</td>
   	  			<td class=\"center\">".number_format($excessTime,2)."</td>
   	  			<td class=\"center\">".number_format($lateTime,2)."</td>
-  	  			<td class=\"center\">".number_format($excessTime,2)."</td></tr>";
+  	  			<td class=\"center\">".number_format($underTime,2)."</td></tr>";
   	  	}
   	  	/*
   	  	$date_in = "";
@@ -179,6 +219,15 @@ $outCheck2 = date('H:i', $outCheck2);
   		*/
   		?>
   </tbody>
+  <tfoot>
+  <?php 
+    	echo "<tr><th colspan = 4 class=\"center\">TOTAL</th>
+  	  		<th class=\"center\">".number_format($totalExcess,2)."</th>
+  	  		<th class=\"center\">".number_format($totalLate,2)."</th>
+  	  		<th class=\"center\">".number_format($totalUndertime,2)."</th></tr>";
+  ?>
+
+  </tfoot>
 </table>
 
 </body>

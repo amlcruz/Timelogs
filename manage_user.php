@@ -224,7 +224,7 @@ include_once ("include/Employee.php");
 		    <p><a href="#" id="create_emp">Enroll Employee</a></p>	
 		    <div id="logout"><p><a href="#" id="view_emp">Logout</a></p></div>
 		    </div>
-		    <div id="content"><?php echo include('view_employee.php'); ?></div>
+		    <div id="content"><?php include('view_employee.php'); ?></div>
 		</div>
 	</body>
 </html>

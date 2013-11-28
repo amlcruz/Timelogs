@@ -1,7 +1,9 @@
 <?php
 include_once ("include/dbconnect.php");
+include_once ("include/Employee.php");
 	$db = new dbcon();
-	$row = $db->getAllEmployees();
+	$emplo = new Employee();
+	$row = $emplo->getAllEmployees();
 	//print_r($row);
 ?>
 <table align="center" border="1px">
@@ -10,13 +12,14 @@ include_once ("include/dbconnect.php");
 	<td colspan="2"><strong>Employee Name</strong></td>
 </tr>
 <?php 
-    foreach($row as $val): 
+    foreach($row as $val):
     echo "<tr>";
 	  echo "<td>".$val['emp_no']."</td>";
 	  echo "<td>".$val['fname']. " ".substr($val['mname'],0,1).". ".$val['lname']." ".$val['auxname']."</td>";
-	  echo "<td><input type='button' id='".$val['emp_no']."' value='Edit' name='edit' /><input type='button' name='delete' id='".$val['emp_no']."' value='Delete'  /></td>";
+	  echo "<td><input type='button' id='".$val['emp_no']."' value='Edit' name='edit' />
+	  	<input type='button' name='delete' id='".$val['emp_no']."' value='Delete'  /></td>";
 	  
     echo "<tr>";
-    endforeach; 
+    endforeach;
     ?>
 </table>

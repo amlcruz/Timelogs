@@ -11,7 +11,7 @@
 	$adjacents = 3;
 	
 	$targetpage = "main.php?linkPass=1";
-	$limit = 2; 								
+	$limit = 3; 								
 	$page = $_GET['page'];
 	if($page) 
 		$start = ($page - 1) * $limit; 			
