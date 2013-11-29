@@ -31,31 +31,21 @@ include_once ("include/Encryption.php");
 
 	<head>
 		<title>TimeLogs</title>
-		<style type='text/css'>
-		body {
-			    background:#66CCCC;
-			}
-			
-		#login {
-				box-align: center;
-			    width:250px;
-			    height: 125px;
-			    background:#6699FF;
-			    border:1px solid #000;
-			    margin-top: 100px;
-			    margin-left: auto;
-    			margin-right: auto;
-    			padding: 50px 5px 5px 5px;
-			}
-			 
-		</style>
 		<script type="text/javascript" src="js/jquery.js"></script>
 	</head>
 	
 	<body>
-		    <div align="center" id="login">
-		    	<form method="POST" id="create">
-		    		<table>
+	    <div align="center" id="login">
+	    
+	    <a class="close-reveal-modal">&#215;</a>
+	    	<form method="POST" id="create">
+	    		<table>
+	    			<thead>
+		    			<tr>
+		    				<th colspan="2">CHANGE PASSWORD</th>
+		    			</tr>
+	    			</thead>
+	    			<tbody>
 		    			<tr>
 		    				<td>New Password: </td>
 		    				<td><input type="password" id="password1" name="password1"></td>
@@ -64,10 +54,14 @@ include_once ("include/Encryption.php");
 		    				<td>Confirm Password: </td>
 		    				<td><input type="password" id="password2" name="password2"></td>
 		    			</tr>
-			    	</table>
-			    	<input name="submit" type="submit" value="Submit">
-		    	</form>
-		    
-		    </div>
+	    			</tbody>
+	    			<tfoot>
+	    				<tr>
+	    					<td colspan="2"><input name="submit" type="submit" value="Submit" class="small button radius"></td>
+	    				</tr>
+	    			</tfoot>
+		    	</table>
+	    	</form>
+	    </div>
 	</body>
 </html>

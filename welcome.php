@@ -7,10 +7,15 @@
 	        <br />
 	        <a href="main.php?linkPass=1" name="viewLog">View Logs</a>
 	        <br />
-	        <a href="update_password.php" name="accManage">Account Management</a>
+	        <a href="update_password.php" name="accManage" data-reveal-id="myModal2" data-reveal-ajax="true">Account Management</a>
 	        <br /><br /><br />
 	        <a href="logout.php" name="accManage">Logout</a>
 	      </div>
 	    </div>
     </fieldset>
 </form>
+
+<div id="myModal2" class="reveal-modal">
+ 
+  
+</div>

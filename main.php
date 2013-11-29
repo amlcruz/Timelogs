@@ -6,9 +6,7 @@ $log = $_COOKIE["log"];
 
 <html>
 <head>
-<?php 
-	include_once ("include/scripts.php");
-?> 
+
 
 </head>
 <body>
@@ -70,6 +68,8 @@ $log = $_COOKIE["log"];
     </div>
     <!-- End Sidebar -->
 </div>
-	
+	<?php 
+	include_once ("include/scripts.php");
+?> 
 </body>
 </html>
